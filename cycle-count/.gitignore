@@ -1,0 +1,16 @@
+# Gradle build outputs
+build/
+.gradle/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# OFBiz runtime artifacts
+runtime/
+logs/
