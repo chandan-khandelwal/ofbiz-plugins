@@ -19,11 +19,11 @@ under the License.
 -->
 
 <entity-engine-xml>
-    <SecurityPermission description="View operations in the Inventory-cycle-count Component." permissionId="INVENTORY-CYCLE-COUNT_VIEW"/>
-    <SecurityPermission description="Create operations in the Inventory-cycle-count Component." permissionId="INVENTORY-CYCLE-COUNT_CREATE"/>
-    <SecurityPermission description="Update operations in the Inventory-cycle-count Component." permissionId="INVENTORY-CYCLE-COUNT_UPDATE"/>
-    <SecurityPermission description="Delete operations in the Inventory-cycle-count Component." permissionId="INVENTORY-CYCLE-COUNT_DELETE"/>
-    <SecurityPermission description="ALL operations in the Inventory-cycle-count Component." permissionId="INVENTORY-CYCLE-COUNT_ADMIN"/>
+    <SecurityPermission description="View operations in the InventoryCycleCount Component." permissionId="INVENTORY-CYCLE-COUNT_VIEW"/>
+    <SecurityPermission description="Create operations in the InventoryCycleCount Component." permissionId="INVENTORY-CYCLE-COUNT_CREATE"/>
+    <SecurityPermission description="Update operations in the InventoryCycleCount Component." permissionId="INVENTORY-CYCLE-COUNT_UPDATE"/>
+    <SecurityPermission description="Delete operations in the InventoryCycleCount Component." permissionId="INVENTORY-CYCLE-COUNT_DELETE"/>
+    <SecurityPermission description="ALL operations in the InventoryCycleCount Component." permissionId="INVENTORY-CYCLE-COUNT_ADMIN"/>
 
     <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="SUPER" permissionId="INVENTORY-CYCLE-COUNT_ADMIN"/>
 

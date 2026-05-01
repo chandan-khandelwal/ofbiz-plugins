@@ -39,11 +39,11 @@ under the License.
     <service-resource type="group" loader="main" location="servicedef/groups.xml"/>
     -->
 
-    <test-suite loader="main" location="testdef/Inventory-cycle-countTests.xml"/>
+    <test-suite loader="main" location="testdef/InventoryCycleCountTests.xml"/>
 
     <!-- web applications; will be mounted when using the embedded container -->
     <webapp name="inventory-cycle-count"
-        title="Inventory-cycle-count"
+        title="InventoryCycleCount"
         server="default-server"
         location="webapp/inventory-cycle-count"
         base-permission="OFBTOOLS,INVENTORY-CYCLE-COUNT"

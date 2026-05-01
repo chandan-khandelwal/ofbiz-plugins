@@ -1,1 +1,1 @@
-The Inventory-cycle-count Help file template.
+The InventoryCycleCount Help file template.

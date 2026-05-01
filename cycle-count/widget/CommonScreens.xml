@@ -24,11 +24,11 @@ under the License.
     <screen name="main-decorator">
         <section>
             <actions>
-                <property-map resource="Inventory-cycle-countUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="InventoryCycleCountUiLabels" map-name="uiLabelMap" global="true"/>
                 <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
 
-                <set field="layoutSettings.companyName" from-field="uiLabelMap.Inventory-cycle-countCompanyName" global="true"/>
-                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.Inventory-cycle-countCompanySubtitle" global="true"/>
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.InventoryCycleCountCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.InventoryCycleCountCompanySubtitle" global="true"/>
                 <!-- layoutSettings.headerImageUrl can be used to specify an application specific logo; if not set,
                     then the global layoutSettings.commonHeaderImageUrl (specified in GlobalDecorator) will be used. -->
                 <!--<set field="layoutSettings.headerImageUrl" value="/images/ofbiz_logo.png" global="true"/>-->
@@ -39,8 +39,8 @@ under the License.
 
                 <set field="activeApp" value="inventory-cycle-count" global="true"/>
                 <set field="applicationMenuName" value="MainAppBar" global="true"/>
-                <set field="applicationMenuLocation" value="component://inventory-cycle-count/widget/Inventory-cycle-countMenus.xml" global="true"/>
-                <set field="applicationTitle" from-field="uiLabelMap.Inventory-cycle-countApplication" global="true"/>
+                <set field="applicationMenuLocation" value="component://inventory-cycle-count/widget/InventoryCycleCountMenus.xml" global="true"/>
+                <set field="applicationTitle" from-field="uiLabelMap.InventoryCycleCountApplication" global="true"/>
             </actions>
             <widgets>
                 <include-screen name="GlobalDecorator" location="component://common/widget/CommonScreens.xml"/>
@@ -48,7 +48,7 @@ under the License.
         </section>
     </screen>
 
-    <screen name="Inventory-cycle-countCommonDecorator">
+    <screen name="InventoryCycleCountCommonDecorator">
         <section>
             <actions>
             </actions>
@@ -63,7 +63,7 @@ under the License.
                                 <decorator-section-include name="body"/>
                             </widgets>
                             <fail-widgets>
-                                <label style="h3">${uiLabelMap.Inventory-cycle-countViewPermissionError}</label>
+                                <label style="h3">${uiLabelMap.InventoryCycleCountViewPermissionError}</label>
                             </fail-widgets>
                         </section>
                     </decorator-section>
