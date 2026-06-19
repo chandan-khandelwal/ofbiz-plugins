@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <title>Entity of Inventory Cycle Count Component</title>
+    <description>Inventory Cycle Count Custom Entities</description>
+
+    <!-- ========================================================= -->
+    <!-- InventoryCount (Session)                                  -->
+    <!-- ========================================================= -->
+    <entity entity-name="InventoryCount"
+            package-name="org.apache.ofbiz.inventorycyclecount"
+            title="Inventory Count Session">
+        <field name="inventoryCountId" type="id"></field>
+        <field name="countName" type="name"></field>
+        <field name="uploadedByUserLoginId" type="id-vlong"></field>
+        <field name="parentCountId" type="id"></field>
+        <field name="statusId" type="id"></field>
+        <field name="createdDate" type="date-time"></field>
+        <field name="dueDate" type="date-time"></field>
+        <field name="workEffortId" type="id"></field>
+        <field name="facilityAreaId" type="id"></field>
+        <field name="approvedDate" type="date-time"></field>
+
+        <prim-key field="inventoryCountId"/>
+
+        <relation type="one" fk-name="INV_CNT_WEFF" rel-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNT_STATUS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNT_UPLOAD_UL" title="UploadedBy" rel-entity-name="UserLogin">
+            <key-map field-name="uploadedByUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNT_PARENT" title="Parent" rel-entity-name="InventoryCount">
+            <key-map field-name="parentCountId" rel-field-name="inventoryCountId"/>
+        </relation>
+    </entity>
+
+    <!-- ========================================================= -->
+    <!-- InventoryCountItem (Count Line)                           -->
+    <!-- ========================================================= -->
+    <entity entity-name="InventoryCountItem"
+            package-name="org.apache.ofbiz.inventorycyclecount"
+            title="Inventory Count Session Item">
+        <field name="inventoryCountId" type="id"></field>
+        <field name="countItemSeqId" type="id"></field>
+        <field name="locationSeqId" type="id"></field>
+        <field name="productId" type="id"></field>
+        <field name="productIdentifier" type="short-varchar"></field>
+        <field name="quantity" type="fixed-point"></field>
+        <field name="countedByUserLoginId" type="id-vlong"></field>
+        <field name="createdDate" type="date-time"></field>
+        <field name="createdByUserLoginId" type="id-vlong"></field>
+        <field name="uuid" type="id"></field>
+        <field name="isRequested" type="indicator"></field>
+
+        <prim-key field="inventoryCountId"/>
+        <prim-key field="countItemSeqId"/>
+
+        <relation type="one" fk-name="INV_CNTI_CNT" rel-entity-name="InventoryCount">
+            <key-map field-name="inventoryCountId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTI_PROD" rel-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTI_COUNT_UL" title="CountedBy" rel-entity-name="UserLogin">
+            <key-map field-name="countedByUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTI_CREATE_UL" title="CreatedBy" rel-entity-name="UserLogin">
+            <key-map field-name="createdByUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+
+        <index name="INV_CNTI_UUID">
+            <index-field name="uuid"/>
+        </index>
+        <index name="INV_CNTI_PROD_IDX">
+            <index-field name="productId"/>
+        </index>
+    </entity>
+
+    <!-- ========================================================= -->
+    <!-- InventoryCountStatus (Session Status History)             -->
+    <!-- ========================================================= -->
+    <entity entity-name="InventoryCountStatus"
+            package-name="org.apache.ofbiz.inventorycyclecount"
+            title="Inventory Count Session Status History">
+        <field name="inventoryCountStatusId" type="id"></field>
+        <field name="inventoryCountId" type="id"></field>
+        <field name="statusId" type="id"></field>
+        <field name="statusDate" type="date-time"></field>
+        <field name="changeByUserLoginId" type="id-vlong"></field>
+
+        <prim-key field="inventoryCountStatusId"/>
+
+        <relation type="one" fk-name="INV_CNTS_CNT" rel-entity-name="InventoryCount">
+            <key-map field-name="inventoryCountId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTS_STATUS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTS_CHANGE_UL" title="ChangeBy" rel-entity-name="UserLogin">
+            <key-map field-name="changeByUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+    </entity>
+
+    <!-- ========================================================= -->
+    <!-- InventoryVarianceDecision (Variance Decision)             -->
+    <!-- ========================================================= -->
+    <entity entity-name="InventoryVarianceDecision"
+            package-name="org.apache.ofbiz.inventorycyclecount"
+            title="Inventory Variance Decision">
+        <field name="workEffortId" type="id"></field>
+        <field name="facilityId" type="id"></field>
+        <field name="productId" type="id"></field>
+        <field name="varianceReasonId" type="id"></field>
+        <field name="varianceOutcomeId" type="id"></field>
+        <field name="physicalInventoryId" type="id"></field>
+        <field name="inventoryItemVarianceId" type="id"></field>
+        <field name="comments" type="comment"></field>
+
+        <prim-key field="workEffortId"/>
+        <prim-key field="facilityId"/>
+        <prim-key field="productId"/>
+
+        <relation type="one" fk-name="INV_VDEC_WEFF" rel-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relation>
+        <relation type="one" fk-name="INV_VDEC_FAC" rel-entity-name="Facility">
+            <key-map field-name="facilityId"/>
+        </relation>
+        <relation type="one" fk-name="INV_VDEC_PROD" rel-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relation>
+        <relation type="one" fk-name="INV_VDEC_REASON" rel-entity-name="VarianceReason">
+            <key-map field-name="varianceReasonId"/>
+        </relation>
+        <relation type="one" fk-name="INV_VDEC_OUTCOME" rel-entity-name="Enumeration">
+            <key-map field-name="varianceOutcomeId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="PhysicalInventory">
+            <key-map field-name="physicalInventoryId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="InventoryItemVariance">
+            <key-map field-name="inventoryItemVarianceId"/>
+        </relation>
+    </entity>
+
+    <!-- ========================================================= -->
+    <!-- InventoryCountLock (Session Locking per Device)           -->
+    <!-- ========================================================= -->
+    <entity entity-name="InventoryCountLock"
+            package-name="org.apache.ofbiz.inventorycyclecount"
+            title="Inventory Count Session Device Lock">
+        <field name="inventoryCountId" type="id"></field>
+        <field name="fromDate" type="date-time"></field>
+        <field name="thruDate" type="date-time"></field>
+        <field name="lockUserLoginId" type="id-vlong"></field>
+        <field name="lockDeviceDescription" type="description"></field>
+        <field name="heartbeatDateTime" type="date-time"></field>
+
+        <prim-key field="inventoryCountId"/>
+        <prim-key field="fromDate"/>
+
+        <relation type="one" fk-name="INV_CNTL_CNT" rel-entity-name="InventoryCount">
+            <key-map field-name="inventoryCountId"/>
+        </relation>
+        <relation type="one" fk-name="INV_CNTL_LOCK_UL" title="LockUser" rel-entity-name="UserLogin">
+            <key-map field-name="lockUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+    </entity>
+</entitymodel>

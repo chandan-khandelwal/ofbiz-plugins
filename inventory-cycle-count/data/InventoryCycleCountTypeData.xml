@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entity-engine-xml>
+    <!-- ========================================================= -->
+    <!-- WorkEffort Types & Purposes                              -->
+    <!-- ========================================================= -->
+    <WorkEffortType description="Inventory Cycle Count Run" hasTable="N" parentTypeId="" workEffortTypeId="CYCLE_COUNT_RUN"/>
+
+    <WorkEffortPurposeType description="Hard Count" parentTypeId="" workEffortPurposeTypeId="HARD_COUNT"/>
+    <WorkEffortPurposeType description="Directed Count" parentTypeId="" workEffortPurposeTypeId="DIRECTED_COUNT"/>
+
+    <!-- ========================================================= -->
+    <!-- Cycle Count Run Status Lifecycle                           -->
+    <!-- ========================================================= -->
+    <StatusType description="Cycle Count Run" hasTable="N" parentTypeId="" statusTypeId="CYCLE_COUNT_RUN"/>
+
+    <StatusItem description="Created" sequenceId="01" statusId="CYCLE_CNT_CREATED" statusTypeId="CYCLE_COUNT_RUN"/>
+    <StatusItem description="In Progress" sequenceId="02" statusId="CYCLE_CNT_IN_PRGS" statusTypeId="CYCLE_COUNT_RUN"/>
+    <StatusItem description="Completed" sequenceId="03" statusId="CYCLE_CNT_CMPLTD" statusTypeId="CYCLE_COUNT_RUN"/>
+    <StatusItem description="Closed" sequenceId="04" statusId="CYCLE_CNT_CLOSED" statusTypeId="CYCLE_COUNT_RUN"/>
+    <StatusItem description="Cancelled" sequenceId="99" statusId="CYCLE_CNT_CNCL" statusTypeId="CYCLE_COUNT_RUN"/>
+
+    <!-- Run Transitions -->
+    <!-- CREATED -> IN_PRGS, CNCL -->
+    <StatusValidChange statusId="CYCLE_CNT_CREATED" statusIdTo="CYCLE_CNT_IN_PRGS" transitionName="Start Run"/>
+    <StatusValidChange statusId="CYCLE_CNT_CREATED" statusIdTo="CYCLE_CNT_CNCL" transitionName="Cancel Run"/>
+
+    <!-- IN_PRGS -> CMPLTD, CNCL -->
+    <StatusValidChange statusId="CYCLE_CNT_IN_PRGS" statusIdTo="CYCLE_CNT_CMPLTD" transitionName="Complete Run"/>
+    <StatusValidChange statusId="CYCLE_CNT_IN_PRGS" statusIdTo="CYCLE_CNT_CNCL" transitionName="Cancel Run"/>
+
+    <!-- CMPLTD -> CLOSED, IN_PRGS, CNCL -->
+    <StatusValidChange statusId="CYCLE_CNT_CMPLTD" statusIdTo="CYCLE_CNT_CLOSED" transitionName="Close Run"/>
+    <StatusValidChange statusId="CYCLE_CNT_CMPLTD" statusIdTo="CYCLE_CNT_IN_PRGS" transitionName="Reopen Run"/>
+    <StatusValidChange statusId="CYCLE_CNT_CMPLTD" statusIdTo="CYCLE_CNT_CNCL" transitionName="Cancel Run"/>
+
+    <!-- ========================================================= -->
+    <!-- Cycle Count Session Status Lifecycle                       -->
+    <!-- ========================================================= -->
+    <StatusType description="Cycle Count Session" hasTable="N" parentTypeId="" statusTypeId="CYCLE_COUNT_SESS"/>
+
+    <StatusItem description="Created" sequenceId="01" statusId="SESSION_CREATED" statusTypeId="CYCLE_COUNT_SESS"/>
+    <StatusItem description="Assigned" sequenceId="02" statusId="SESSION_ASSIGNED" statusTypeId="CYCLE_COUNT_SESS"/>
+    <StatusItem description="Submitted" sequenceId="03" statusId="SESSION_SUBMITTED" statusTypeId="CYCLE_COUNT_SESS"/>
+    <StatusItem description="Approved" sequenceId="04" statusId="SESSION_APPROVED" statusTypeId="CYCLE_COUNT_SESS"/>
+    <StatusItem description="Voided" sequenceId="99" statusId="SESSION_VOIDED" statusTypeId="CYCLE_COUNT_SESS"/>
+
+    <!-- Session Transitions -->
+    <!-- CREATED -> ASSIGNED, VOIDED -->
+    <StatusValidChange statusId="SESSION_CREATED" statusIdTo="SESSION_ASSIGNED" transitionName="Assign Session"/>
+    <StatusValidChange statusId="SESSION_CREATED" statusIdTo="SESSION_VOIDED" transitionName="Void Session"/>
+
+    <!-- ASSIGNED -> SUBMITTED, CREATED, VOIDED -->
+    <StatusValidChange statusId="SESSION_ASSIGNED" statusIdTo="SESSION_SUBMITTED" transitionName="Submit Session"/>
+    <StatusValidChange statusId="SESSION_ASSIGNED" statusIdTo="SESSION_CREATED" transitionName="Unassign Session"/>
+    <StatusValidChange statusId="SESSION_ASSIGNED" statusIdTo="SESSION_VOIDED" transitionName="Void Session"/>
+
+    <!-- SUBMITTED -> APPROVED, ASSIGNED, VOIDED -->
+    <StatusValidChange statusId="SESSION_SUBMITTED" statusIdTo="SESSION_APPROVED" transitionName="Approve Session"/>
+    <StatusValidChange statusId="SESSION_SUBMITTED" statusIdTo="SESSION_ASSIGNED" transitionName="Reject Session"/>
+    <StatusValidChange statusId="SESSION_SUBMITTED" statusIdTo="SESSION_VOIDED" transitionName="Void Session"/>
+
+    <!-- ========================================================= -->
+    <!-- Variance Decisions (Reasons and Outcomes)                -->
+    <!-- ========================================================= -->
+    <VarianceReason description="Annual Count Adjustment" varianceReasonId="ANNUAL_COUNT_ADJ"/>
+    <VarianceReason description="Manager Override" varianceReasonId="MANAGER_OVERRIDE"/>
+    <VarianceReason description="Partial Scope Post" varianceReasonId="PARTIAL_SCOPE_POST"/>
+    <VarianceReason description="Correction After Review" varianceReasonId="CORR_AFTER_REVIEW"/>
+
+    <EnumerationType description="Variance Decision Outcome" enumTypeId="VAR_OUTCOME"/>
+    <Enumeration description="Applied" enumId="APPLIED" enumTypeId="VAR_OUTCOME" sequenceId="01"/>
+    <Enumeration description="Skipped" enumId="SKIPPED" enumTypeId="VAR_OUTCOME" sequenceId="02"/>
+</entity-engine-xml>
